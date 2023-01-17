@@ -1,0 +1,74 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+			<section class="header_text sub">
+			<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products" >
+				<h4><span>Product Detail</span></h4>
+			</section>
+			<section class="main-content">				
+				<div class="row">						
+					<div class="span9">
+						<div class="row">
+							<div class="span4">
+							<a class="thumbnail" ><img alt="" src="{{pr.img.url}}"></a>
+
+								</ul>
+							</div>
+							<div class="span5" >
+								<address>
+									<strong>name:</strong> <span>{{pr.name}}</span><br>
+									<strong>Product Category</strong> <span>{{pr.category}}</span><br>
+<!--									<strong>stock:</strong> <span>{{pr.stock}}</span><br>-->
+									<strong>Availability:</strong> <span>{{pr.product_available_count}}</span><br>
+								</address>									
+								<h4><strong>Price: {{pr.price}}</strong></h4>
+							</div>
+							<div class="span5">
+								<form class="form-inline">
+
+									<p>&nbsp;</p>
+
+
+									{% if pr.product_available_count >= 0 %}
+									<button class="btn btn-inverse" type="submit"><a href="{% url 'add_to_cart' pr.pk%}">Add to cart</a></button>
+
+										{% else %}
+										<h1 style="color:red">sorry no stock left</h1>
+									{% endif %}
+									<button><a href="{% url 'cart' %}">Go to Cart</a></button>
+
+								</form>
+							</div>							
+						</div>
+						<div class="row">
+							<div class="span9">
+								<ul class="nav nav-tabs" id="myTab">
+									<li class="active"><a href="/">Description</a></li>
+
+								</ul>							 
+								<div class="tab-content">
+									<div class="tab-pane active" id="home">{{pr.desc}}</div>
+									<div class="tab-pane" id="profile">
+										<table class="table table-striped shop_attributes">	
+											<tbody>
+												<tr class="">
+													<th>Size</th>
+													<td>{{pr.size}}</td>
+												</tr>		
+												<tr class="alt">
+													<th>Colour</th>
+													<td>{{pr.color}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>							
+							</div>						
+
+						</div>
+					</div>
+				</div>
+				</div>
+
+			</section>
+{% endblock %}

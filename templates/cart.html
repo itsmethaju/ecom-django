@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<body xmlns="http://www.w3.org/1999/html">
+
+
+<section class="header_text sub">
+    <img class="pageBanner" src="{% static 'themes/images/pageBanner.png' %}" alt="New products">
+    <h4><span>Shopping Cart</span></h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span9">
+            <h4 class="title"><span class="text"><strong>Your</strong> Cart</span></h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>no</th>
+                    <th>Remove</th>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order_item in order.items.all %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><input type="checkbox" value="option1"></td>
+                    <td><a href="product_detail.html"><img alt="" src="{{order_item.product.img.url}}" style="width:150;height:150px"></a>
+                    </td>
+                    <td>{{ order_item.product.name}}</td>
+                    <td>
+                        <a href="{% url 'add_item' order_item.product.pk %}">+</a>&nbsp;
+                        {{ order_item.quantity }} &nbsp;
+                        <a href="{% url 'remove_item' order_item.product.pk %}">-</i></a>
+                    </td>
+                    <td>RS:{{ order_item.product.price }}</td>
+                    <td>RS:{{ order_item.get_final_price }}</td>
+                </tr>
+				{% empty %}
+				<tr class="rew100 body">
+					<td class="cell100 column1">Your Cart is Empty</td>
+					<td colspan="cell100 column1">
+						<a href="{% url 'home' %}" class="btn btn-primary float-right">Continue shopping</a>
+					</td>
+				</tr>
+				{% endfor %}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td><strong></strong></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <hr>
+            {% if order.get_total_price %}
+            <p class="cart-total right">
+                <strong>Total</strong>:{{ order.get_total_price }} <br>
+            </p>
+            {% endif %}
+            <hr/>
+            <p class="buttons center">
+               <a href="{% url 'home' %}"> <button class="btn" type="button">BACK TO HOME</button></a>
+                <a href="{% url 'checkout' %}"><button class="btn" type="button">Continue</button></a>
+                <!-- <button class="btn btn-inverse" type="submit" id="checkout">Checkout</button> -->
+            </p>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+{% endblock %}

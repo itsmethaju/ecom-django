@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>add_product </title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static '/css/login.css' %}">
+</head>
+<body>
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 login-section-wrapper">
+          <div class="brand-wrapper">
+            <a href="{% url 'home' %}">back to home</a>
+            <img src="{% static '/images/logo.svg' %}"  alt="logo" class="logo">
+          </div>
+          <div class="login-wrapper my-auto">
+            <h1 class="login-title" >ADD PRODUCT</h1>
+             {% if messages %}
+            {% for message in messages %}
+            <h1 class="login-title badge badge-light " style="color:red">{{message}}</h1>
+            {% endfor %}
+            {% endif %}
+            <form  method="post" enctype='multipart/form-data' action="{% url 'add_products' %}" >
+              {% csrf_token %}
+              {% for field in form.visible_fields %}
+              <div class="form-group">
+              {{ field.label_tag }}
+              {{ field }}
+              </div>
+              {% endfor %}
+
+
+              <input name="add_products" id="add_products" class="btn btn-block login-btn" type="submit" value="add_products">
+
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
